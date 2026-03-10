@@ -5,9 +5,10 @@ export const ABOUT = {
     { text: "I am", color: "#ff6b00" },
     { text: " a passionate developer", color: "#ffffff" },
     { text: " that focuses on ", color: "#ffffff" },
-    { text: "pixel-perfect websites", color: "#ff6b00" },
+    { text: "develpment websites", color: "#ff6b00" },
     { text: " and", color: "#ffffff" },
     { text: " applications that convert.", color: "#ff6b00" },
+    { text: " ideas into reality.", color: "#ffffff" },
   ],
 
   paragraphs: [
