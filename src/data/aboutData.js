@@ -7,7 +7,7 @@ export const ABOUT = {
     { text: " that focuses on ", color: "#ffffff" },
     { text: "develpment websites", color: "#ff6b00" },
     { text: " and", color: "#ffffff" },
-    { text: " applications that convert.", color: "#ff6b00" },
+    { text: " applications that converts", color: "#ff6b00" },
     { text: " ideas into reality.", color: "#ffffff" },
   ],
 
