@@ -19,7 +19,8 @@ export const ABOUT = {
 
   contact: {
     email: "gornezjonard@gmail.com",
-    location: "Mojon Santa Cruz Viejo ,Tanjay City Negrs Oriental, Philippines",
+    location:
+      "Mojon Santa Cruz Viejo ,Tanjay City Negross Oriental, Philippines",
     availability: "Accepting new projects",
   },
 
