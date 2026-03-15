@@ -21,7 +21,7 @@ export default function Header() {
       </div>
 
       <a
-        href="mailto:jonard@example.com"
+        href="mailto:gornezjonard@gmail.com"
         className="text-white text-xs font-medium tracking-widest uppercase hover:text-[#ff6b00] transition-colors duration-200"
       >
         CONTACT
