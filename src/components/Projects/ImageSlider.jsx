@@ -7,13 +7,17 @@ export default function ImageSlider({ images, accentColor }) {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState("next");
+
   const timerRef = useRef(null);
+  const touchStartX = useRef(0);
 
   const goTo = useCallback(
     (nextIndex, dir = "next") => {
       if (animating) return;
+
       setDirection(dir);
       setAnimating(true);
+
       setTimeout(() => {
         setCurrent(nextIndex);
         setAnimating(false);
@@ -57,14 +61,36 @@ export default function ImageSlider({ images, accentColor }) {
     resetTimer();
   };
 
+  /* Mobile swipe support */
+
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+
+    if (Math.abs(diff) < 40) return;
+
+    if (diff > 0) {
+      handleNext();
+    } else {
+      handlePrev();
+    }
+  };
+
   return (
     <div className="relative w-full h-full flex flex-col">
-      <div className="relative flex-1 overflow-hidden rounded-xl">
+      <div
+        className="relative flex-1 overflow-hidden rounded-xl flex items-center justify-center p-2 sm:p-4"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         <img
           key={current}
           src={images[current]}
           alt=""
-          className="w-full h-full object-cover"
+          className="max-w-full max-h-full object-contain"
           style={{
             animation: animating
               ? direction === "next"
@@ -76,7 +102,9 @@ export default function ImageSlider({ images, accentColor }) {
           }}
         />
 
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+        {/* arrows */}
+
+        <div className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-10">
           <ArrowButton
             direction="prev"
             onClick={handlePrev}
@@ -84,13 +112,15 @@ export default function ImageSlider({ images, accentColor }) {
           />
         </div>
 
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10">
+        <div className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10">
           <ArrowButton
             direction="next"
             onClick={handleNext}
             accentColor={accentColor}
           />
         </div>
+
+        {/* progress bar */}
 
         <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
           <div
@@ -103,6 +133,8 @@ export default function ImageSlider({ images, accentColor }) {
           />
         </div>
       </div>
+
+      {/* dots */}
 
       <div className="flex justify-center gap-2 pt-4">
         {images.map((_, i) => (
@@ -121,11 +153,30 @@ export default function ImageSlider({ images, accentColor }) {
       </div>
 
       <style>{`
-        @keyframes slideInRight { from { transform: translateX(60px); opacity:0;} to {transform:translateX(0);opacity:1;} }
-        @keyframes slideInLeft { from { transform: translateX(-60px); opacity:0;} to {transform:translateX(0);opacity:1;} }
-        @keyframes slideOutLeft { from { transform: translateX(0); opacity:1;} to {transform:translateX(-60px);opacity:0;} }
-        @keyframes slideOutRight { from { transform: translateX(0); opacity:1;} to {transform:translateX(60px);opacity:0;} }
-        @keyframes progressBar { from { width:0%; } to { width:100%; } }
+        @keyframes slideInRight {
+          from { transform: translateX(60px); opacity:0;}
+          to {transform:translateX(0);opacity:1;}
+        }
+
+        @keyframes slideInLeft {
+          from { transform: translateX(-60px); opacity:0;}
+          to {transform:translateX(0);opacity:1;}
+        }
+
+        @keyframes slideOutLeft {
+          from { transform: translateX(0); opacity:1;}
+          to {transform:translateX(-60px);opacity:0;}
+        }
+
+        @keyframes slideOutRight {
+          from { transform: translateX(0); opacity:1;}
+          to {transform:translateX(60px);opacity:0;}
+        }
+
+        @keyframes progressBar {
+          from { width:0%; }
+          to { width:100%; }
+        }
       `}</style>
     </div>
   );

@@ -11,7 +11,7 @@ export default function ProjectCard({ project, index }) {
     const onScroll = () => {
       const rect = card.getBoundingClientRect();
       const scrolled = Math.max(0, -rect.top);
-      const progress = Math.min(scrolled / rect.height, 1);
+      const progress = Math.min(scrolled / (rect.height * 0.9), 1);
 
       const scale = 1 - (1 - 0.93) * progress;
       const ty = -progress * 36;
@@ -38,15 +38,27 @@ export default function ProjectCard({ project, index }) {
         className="w-full min-h-screen flex flex-col lg:flex-row"
         style={{ backgroundColor: project.bgColor }}
       >
-        <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
+        {/* LEFT SIDE */}
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-12">
           <div
-            className="relative w-full max-w-2xl rounded-2xl overflow-hidden flex flex-col"
+            className="
+              relative
+              w-full
+              max-w-2xl
+              rounded-2xl
+              overflow-hidden
+              flex
+              flex-col
+              h-[420px]
+              sm:h-[480px]
+              lg:h-[520px]
+            "
             style={{
               backgroundColor: project.cardBg,
-              height: "520px",
               padding: "20px 20px 16px",
             }}
           >
+            {/* IMAGE AREA */}
             <div className="flex-1 flex flex-col min-h-0">
               <ImageSlider
                 images={project.images}
@@ -54,19 +66,36 @@ export default function ProjectCard({ project, index }) {
               />
             </div>
 
+            {/* PRODUCT INFO */}
             <div className="pt-4 flex items-end justify-between">
               <div>
                 <h3 className="text-white font-black text-xl">
                   {project.productTitle}
                 </h3>
+
                 <p className="text-white/50 text-xs">
                   {project.productSubtitle}
                 </p>
               </div>
 
+              {/* MOBILE BUTTON */}
               <button
-                className="ml-4 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border-2 lg:hidden"
-                style={{ borderColor: project.bgColor, color: project.bgColor }}
+                className="
+                  ml-4
+                  px-5
+                  py-2
+                  rounded-full
+                  text-xs
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  border-2
+                  lg:hidden
+                "
+                style={{
+                  borderColor: project.bgColor,
+                  color: project.bgColor,
+                }}
               >
                 {project.ctaLabel}
               </button>
@@ -74,27 +103,50 @@ export default function ProjectCard({ project, index }) {
           </div>
         </div>
 
+        {/* RIGHT SIDE (DESKTOP) */}
         <div className="hidden lg:flex flex-none lg:w-96 xl:w-[440px] flex-col justify-center p-8 lg:p-12">
           <h2 className="font-black text-white text-4xl">{project.title}</h2>
+
           <p className="text-white/80 mb-6">— {project.type}</p>
 
           <p className="text-white mb-4">{project.description}</p>
+
           <p className="text-white mb-8">{project.detail}</p>
 
+          {/* TAGS */}
           <div className="flex flex-wrap gap-2 mb-8">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-xs font-bold uppercase rounded-full border-2 border-white/40 text-white"
+                className="
+                  px-3
+                  py-1
+                  text-xs
+                  font-bold
+                  uppercase
+                  rounded-full
+                  border-2
+                  border-white/40
+                  text-white
+                "
               >
                 {tag}
               </span>
             ))}
           </div>
 
+          {/* VIEW WEBSITE */}
           <a
             href={project.link}
-            className="inline-flex items-center gap-2 text-white font-bold uppercase text-sm"
+            className="
+              inline-flex
+              items-center
+              gap-2
+              text-white
+              font-bold
+              uppercase
+              text-sm
+            "
           >
             VIEW WEBSITE
           </a>
